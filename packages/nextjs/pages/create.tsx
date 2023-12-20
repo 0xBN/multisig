@@ -98,6 +98,9 @@ const CreatePage: FC = () => {
           requiredApprovals: signaturesRequired || 0n,
         };
 
+        console.log("Sending data to:", POOL_SERVER_URL);
+        console.log("Request data:", txData);
+
         await fetch(POOL_SERVER_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },

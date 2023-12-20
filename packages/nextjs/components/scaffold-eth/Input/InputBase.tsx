@@ -5,6 +5,8 @@ type InputBaseProps<T> = CommonInputProps<T> & {
   error?: boolean;
   prefix?: ReactNode;
   suffix?: ReactNode;
+  isValid?: boolean;
+  className?: string;
 };
 
 export const InputBase = <T extends { toString: () => string } | undefined = string>({
@@ -16,12 +18,18 @@ export const InputBase = <T extends { toString: () => string } | undefined = str
   disabled,
   prefix,
   suffix,
+  isValid,
+  className,
 }: InputBaseProps<T>) => {
   let modifier = "";
   if (error) {
     modifier = "border-error";
   } else if (disabled) {
     modifier = "border-disabled bg-base-300";
+  } else if (isValid === true) {
+    modifier = "border-green-500"; // Green border for valid
+  } else if (isValid === false) {
+    modifier = "border-red-500"; // Red border for invalid
   }
 
   const handleChange = useCallback(
@@ -32,7 +40,7 @@ export const InputBase = <T extends { toString: () => string } | undefined = str
   );
 
   return (
-    <div className={`flex border-2 border-base-300 bg-base-200 rounded-full text-accent ${modifier}`}>
+    <div className={`flex border-2 border-base-300 bg-base-200 rounded-full text-accent ${modifier} ${className}`}>
       {prefix}
       <input
         className="input input-ghost focus:outline-none focus:bg-transparent focus:text-secondary-content h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-secondary-content"

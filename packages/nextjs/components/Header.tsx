@@ -69,24 +69,24 @@ export const Header = () => {
           Create
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink href="/pool">
           <Bars3CenterLeftIcon className="h-4 w-4" />
           Pool
         </NavLink>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <NavLink href="/debug">
           <BugAntIcon className="h-4 w-4" />
           Debug Contracts
         </NavLink>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <NavLink href="/blockexplorer">
           <MagnifyingGlassIcon className="h-4 w-4" />
           Block Explorer
         </NavLink>
-      </li>
+      </li> */}
     </>
   );
 

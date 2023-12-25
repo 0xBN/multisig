@@ -14,3 +14,4 @@ export interface MultisigTransaction {
   action: string;
   txHash: string;
 }
+export type Method = "addSigner" | "removeSigner" | "transferFunds";

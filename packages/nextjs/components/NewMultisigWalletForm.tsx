@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
 import { isAddress } from "viem/utils";
+import { useAccount } from "wagmi";
 import { AddressInput } from "~~/components/scaffold-eth";
 import useEthereum from "~~/hooks/custom/useEthereum";
 import useMultisigSigners from "~~/hooks/custom/useMultisigSigners";
@@ -35,6 +36,7 @@ const NewMultisigWalletForm: React.FC<MultisigWalletFormProps> = ({
   const { chainId, isConnectedWalletAdded, connectedWallet } = useWalletConnection(signers);
   const { signer } = useEthereum();
   const [isDeploying, setIsDeploying] = useState(false);
+  const { address: userAddress } = useAccount();
 
   // Calculate valid signers count and threshold options
   const validSignersCount = signers.filter(address => isAddress(address)).length;
@@ -91,6 +93,7 @@ const NewMultisigWalletForm: React.FC<MultisigWalletFormProps> = ({
         address: deployedAddress,
         signers: validSigners,
         threshold: threshold,
+        txHash: deployedAddress,
       };
 
       await addFirestoreDocument("multisigWallets", newMultisigWalletData);
@@ -156,10 +159,10 @@ const NewMultisigWalletForm: React.FC<MultisigWalletFormProps> = ({
 
         <button
           className="btn btn-primary mt-4"
-          disabled={isDeploying || validSignersCount === 0}
+          disabled={isDeploying || validSignersCount === 0 || userAddress === undefined}
           onClick={deployMultisigWallet}
         >
-          Deploy Multisig
+          {userAddress ? "Deploy Multisig" : "Connect Wallet"}
         </button>
       </div>
     </>

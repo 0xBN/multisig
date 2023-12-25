@@ -10,6 +10,7 @@ import {
   serverTimestamp,
   where,
 } from "firebase/firestore";
+import { MultisigWallet } from "~~/types/multisigWallet";
 
 // A popular library for handling dates
 
@@ -70,7 +71,7 @@ export const addFirestoreDocument = async (collectionName: string, data: object)
   }
 };
 
-export const fetchMultisigWalletData = async (walletAddress: string) => {
+export const fetchMultisigWalletData = async (walletAddress: string): Promise<MultisigWallet | null> => {
   try {
     const db = getFirestore(firebaseApp);
     const walletCollectionRef = collection(db, "multisigWallets");

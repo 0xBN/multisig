@@ -12,10 +12,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useAccount } from "wagmi";
-import { Address } from "~~/components/scaffold-eth";
 import { tableHeaders } from "~~/config/transactionTable";
-import { convertFirestoreTimestampToDate } from "~~/services/firebaseService";
 import { MultisigTransaction } from "~~/types/multisigTransaction";
 import { MultisigWallet } from "~~/types/multisigWallet";
 
@@ -23,11 +20,10 @@ interface MultisigTransactionsListProps {
   walletData: MultisigWallet;
 }
 
-const MultisigTransactionsList: FC<MultisigTransactionsListProps> = ({ walletData }) => {
+const MultisigTransactionsList: FC<MultisigTransactionsListProps> = () => {
   const router = useRouter();
   const { address: multisigWalletAddress } = router.query;
 
-  const { address: userAddress } = useAccount();
   const [transactions, setTransactions] = useState<MultisigTransaction[]>([]);
   const db = getFirestore(firebaseApp);
 

@@ -46,10 +46,29 @@ export const fetchFirestoreCollection = async (collectionName: string, userAddre
   }
 };
 
+// Function for adding a new wallet
+export const addNewWallet = async (walletData: object) => {
+  return addFirestoreDocument("multisigWallets", {
+    ...walletData,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+    nonce: 0,
+  });
+};
+
+// Function for creating a new transaction
+export const createNewTransaction = async (transactionData: object) => {
+  return addFirestoreDocument("multisigTransactions", {
+    ...transactionData,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+};
+
 export const addFirestoreDocument = async (collectionName: string, data: object) => {
   const db = getFirestore(firebaseApp);
   const dataCollection = collection(db, collectionName);
-  const timestamp = serverTimestamp(); // Current server timestamp
+  const timestamp = serverTimestamp();
 
   const documentData = {
     ...data,

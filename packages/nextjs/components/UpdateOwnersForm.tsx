@@ -4,7 +4,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { useAccount } from "wagmi";
 import { Address, AddressInput, IntegerInput } from "~~/components/scaffold-eth";
 import useEthereum from "~~/hooks/custom/useEthereum";
-import { addFirestoreDocument, fetchMultisigWalletData } from "~~/services/firebaseService";
+import { addFirestoreDocument, createNewTransaction, fetchMultisigWalletData } from "~~/services/firebaseService";
 
 interface MultisigWallet {
   id: string;
@@ -74,7 +74,7 @@ const UpdateOwnersForm = () => {
       };
 
       // Write to Firebase
-      const transactionId = await addFirestoreDocument("transactions", newTransactionData);
+      const transactionId = await createNewTransaction(newTransactionData);
       console.log("Transaction proposed:", transactionId);
 
       // Optional: Update UI or navigate to another page

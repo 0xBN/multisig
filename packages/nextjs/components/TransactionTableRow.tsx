@@ -30,7 +30,8 @@ const TransactionTableRow: FC<TransactionTableRowProps> = ({ transaction }) => {
       case "created":
         return convertFirestoreTimestampToDate(transaction.created);
       case "signers":
-        return transaction.signers.map((signer, i) => <Address key={i} address={signer} size="base" />);
+        if (transaction.signers?.length === 0) return <div>No sigs</div>;
+        return transaction.signers?.map((signer, i) => <Address key={i} address={signer.address} size="base" />);
       case "txHash":
         return (
           <a
@@ -41,7 +42,9 @@ const TransactionTableRow: FC<TransactionTableRowProps> = ({ transaction }) => {
           </a>
         );
       case "actions":
-        const signed = transaction.signers.includes(transaction.proposedBy) || transaction.proposedBy === userAddress;
+        const isConnectedWalletSigner =
+          transaction.signers?.filter(signer => signer.address === userAddress).length > 0;
+        const signed = isConnectedWalletSigner || transaction.proposedBy === userAddress;
         const executed = transaction.status === "executed";
         return (
           <div className={`flex flex-col gap-2`}>
@@ -53,7 +56,7 @@ const TransactionTableRow: FC<TransactionTableRowProps> = ({ transaction }) => {
             {!executed && (
               <button
                 onClick={handleExecuteTransaction}
-                disabled={transaction.signers.length < transaction.threshold}
+                disabled={transaction.signers?.length < transaction.threshold}
                 className={`btn text-xs`}
               >
                 {executed ? "executed" : "execute"}

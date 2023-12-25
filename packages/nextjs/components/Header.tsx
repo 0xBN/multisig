@@ -10,6 +10,7 @@ import {
   MagnifyingGlassIcon,
   PencilIcon,
   PlusCircleIcon,
+  WalletIcon,
 } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
@@ -45,9 +46,15 @@ export const Header = () => {
   const navLinks = (
     <>
       <li>
+        <NavLink href="/">
+          <WalletIcon className="h-4 w-4" />
+          Create
+        </NavLink>
+      </li>
+      <li>
         <NavLink href="/multisig">
           <PencilIcon className="h-4 w-4" />
-          Multisig
+          View My Multisig
         </NavLink>
       </li>
       <li>
@@ -108,13 +115,13 @@ export const Header = () => {
             </ul>
           )}
         </div>
-        <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
+        <Link href="/" passHref className=" lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-10 h-10">
             <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">MaaS</span>
-            <span className="text-xs">MultiSig as a Service</span>
+            <span className="text-xs hidden ">MultiSig as a Service</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>

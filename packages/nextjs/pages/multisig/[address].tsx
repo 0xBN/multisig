@@ -51,7 +51,7 @@ const MultisigWalletPage = () => {
         {activeTab === DashboardTab.Overview && walletData && (
           <MultisigWalletDisplay wallet={walletData} contractAddress={walletData.address} showEnter={false} />
         )}
-        {activeTab === DashboardTab.Owners && <UpdateOwnersForm />}
+        {activeTab === DashboardTab.UpdateOwners && <UpdateOwnersForm />}
         {activeTab === DashboardTab.Transactions && walletData && <MultisigTransactionsList walletData={walletData} />}
       </div>
     </>

@@ -20,18 +20,25 @@ const MultisigWalletDisplay: FC<{ contractAddress: string; wallet: MultisigWalle
 
   return (
     <div className="flex items-center flex-col flex-grow w-full ">
-      <div className="flex flex-col gap-4 items-center bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 w-full max-w-lg">
-        <div className={`flex w-full justify-between items-center`}>
-          <div className={`text-sm`}>
-            Owner{wallet.signers.length === 1 ? "" : "s"}: {wallet.signers.length}
-          </div>
-          <Balance address={contractAddress} />
-          <div className={`text-sm`}>Req: {wallet.threshold}</div>
+      <div className="flex flex-col gap-4 items-center bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-4 w-full max-w-lg">
+        <div className={`text-sm flex flex-col items-start w-full`}></div>
+        <div className={`flex flex-col items-center justify-center text-sm w-full`}>
+          <>
+            Multisig Address:
+            <Address address={contractAddress} />
+            <Balance address={contractAddress} />
+          </>
         </div>
         <QRCodeSVG value={contractAddress || ""} size={125} />
-        <Address address={contractAddress} />
-        <div className={`text-sm`}>Updated: {updatedAt}</div>
-        <div className={`text-sm`}>Created: {createdAt}</div>
+
+        <div className={`flex flex-col items-start justify-center text-sm`}>
+          Signer{wallet.signers.length === 1 ? "" : "s"}: {wallet.signers.length} | Required Sigs: {wallet.threshold}
+          <div className={`mt-2`}>
+            {wallet.signers.map(signer => (
+              <Address key={signer} address={signer} />
+            ))}
+          </div>
+        </div>
 
         {showEnter && (
           <Link className="btn btn-primary" href={`/multisig/${contractAddress}`}>

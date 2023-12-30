@@ -1,4 +1,6 @@
-export const tableHeaders = [
+import { TableCellKey } from "~~/types/multisigTransaction";
+
+export const tableHeaders: Array<{ key: TableCellKey; title: string }> = [
   { key: "nonce", title: "Nonce" },
   { key: "status", title: "Status" },
   { key: "created", title: "Created" },

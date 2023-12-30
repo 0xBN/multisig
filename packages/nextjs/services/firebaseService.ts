@@ -4,10 +4,12 @@ import {
   Timestamp,
   addDoc,
   collection,
+  doc,
   getDocs,
   getFirestore,
   query,
   serverTimestamp,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { MultisigWallet } from "~~/types/multisigWallet";
@@ -109,4 +111,26 @@ export const fetchMultisigWalletData = async (walletAddress: string): Promise<Mu
     console.error("Error fetching multisig wallet data:", error);
     throw new Error("Failed to fetch multisig wallet data");
   }
+};
+
+// Function to fetch transactions with a specific nonce
+export const fetchTransactionsWithNonce = async (nonce: number, walletAddress: string) => {
+  const db = getFirestore(firebaseApp);
+  const transactionsCollection = collection(db, "multisigTransactions");
+  const q = query(transactionsCollection, where("nonce", "==", nonce), where("walletAddress", "==", walletAddress));
+
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
+// Function to cancel transactions
+export const cancelTransactions = async (transactionIds: string[]) => {
+  const db = getFirestore(firebaseApp);
+
+  const updates = transactionIds.map(transactionId => {
+    const transactionRef = doc(db, "multisigTransactions", transactionId);
+    return updateDoc(transactionRef, { status: "cancelled" });
+  });
+
+  await Promise.all(updates);
 };

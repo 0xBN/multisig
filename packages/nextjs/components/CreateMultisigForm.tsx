@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MultisigWalletDeployed from "./MultisigWalletDeployed";
 import NewMultisigWalletForm from "./NewMultisigWalletForm";
-import { useAccount } from "wagmi";
 import useMultisigSigners from "~~/hooks/custom/useMultisigSigners";
 import { MultisigWallet } from "~~/types/multisigWallet";
 
@@ -9,7 +8,6 @@ const CreateMultisigForm = () => {
   const { signers, addSigner, removeSigner, updateSigner, threshold, setThreshold, thresholdOptions, setSigners } =
     useMultisigSigners();
   const [multisigWalletData, setMultisigWalletData] = useState<MultisigWallet | null>(null);
-  const { address: userAddress } = useAccount();
 
   const resetForm = () => {
     setSigners([]);

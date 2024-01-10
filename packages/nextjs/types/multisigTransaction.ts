@@ -8,29 +8,33 @@ export interface Signer {
 export type PredefinedTxData = {
   methodName: Method;
   signer: string;
-  newSignaturesNumber: number;
-  to?: string;
+  newSignaturesNumber: string;
+  to: string;
   amount?: string;
   callData?: `0x${string}` | "";
+  frequency: string;
 };
 
 export type TransactionStatus = "proposed" | "pending" | "readyToExecute" | "executed" | "failed";
 
-export type TableCellKey = keyof MultisigTransaction | "actions";
+export type TableCellKey = keyof MultisigTransaction | "description" | "actionRequired";
 
-export type Method = "addSigner" | "removeSigner" | "transferFunds";
+export type Method = "addSigner" | "removeSigner" | "transferFunds" | "proposeStream" | "openStream" | "closeStream";
 
 export interface MultisigTransaction {
   id?: string;
-  threshold: number;
+  threshold?: number;
   signers: Signer[];
-  created: Timestamp;
+  createdAt?: Timestamp | undefined;
+  updatedAt?: Timestamp | undefined;
   proposedBy: string;
   nonce: number;
-  lastUpdated: Timestamp;
   status: TransactionStatus;
   walletAddress: string;
   callData: string;
   action: string;
-  txHash: string;
+  signatureRequiredTransactionHash: string;
+  targetAddress?: string;
+  frequency?: number;
+  amount?: number;
 }

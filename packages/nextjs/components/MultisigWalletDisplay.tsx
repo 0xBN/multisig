@@ -2,7 +2,6 @@ import { FC } from "react";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { Address, Balance } from "~~/components/scaffold-eth";
-import { convertFirestoreTimestampToDate } from "~~/services/firebaseService";
 import { MultisigWallet } from "~~/types/multisigWallet";
 
 const MultisigWalletDisplay: FC<{ contractAddress: string; wallet: MultisigWallet; showEnter: boolean }> = ({
@@ -10,14 +9,6 @@ const MultisigWalletDisplay: FC<{ contractAddress: string; wallet: MultisigWalle
   wallet,
   showEnter = true,
 }) => {
-  let updatedAt = "";
-  let createdAt = "";
-
-  if (wallet) {
-    updatedAt = convertFirestoreTimestampToDate(wallet.updatedAt);
-    createdAt = convertFirestoreTimestampToDate(wallet.createdAt);
-  }
-
   return (
     <div className="flex items-center flex-col flex-grow w-full ">
       <div className="flex flex-col gap-4 items-center bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-4 w-full max-w-lg">

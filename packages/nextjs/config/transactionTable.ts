@@ -1,19 +1,22 @@
 import { TableCellKey } from "~~/types/multisigTransaction";
 
 export const tableHeaders: Array<{ key: TableCellKey; title: string }> = [
-  { key: "nonce", title: "Nonce" },
-  { key: "status", title: "Status" },
-  { key: "created", title: "Created" },
-  { key: "txHash", title: "Tx Hash" },
+  { key: "action", title: "Action" },
+  { key: "targetAddress", title: "Target Address" },
+  { key: "threshold", title: "New Threshold" },
+  { key: "amount", title: "Amount" },
+  { key: "frequency", title: "Frequency" },
   { key: "proposedBy", title: "Proposer" },
+  { key: "createdAt", title: "Created At" },
+  { key: "status", title: "Status" },
   { key: "signers", title: "Signed By" },
-  { key: "actions", title: "Actions" },
+  { key: "actionRequired", title: "Action Required" },
 
   // Good Above
+  // { key: "nonce", title: "Nonce" },
   // { key: "lastUpdated", title: "Last Updated" },
   // { key: "callData", title: "Call Data" },
   // { key: "threshold", title: "Threshold" },
-  // { key: "action", title: "Action" },
   // { key: "walletAddress", title: "Wallet Address" },
   // { key: "id", title: "ID" },
 ];

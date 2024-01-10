@@ -17,7 +17,7 @@ import { MultisigWallet } from "~~/types/multisigWallet";
 // A popular library for handling dates
 
 // Assuming 'timestamp' is the Firestore timestamp you retrieved
-export const convertFirestoreTimestampToDate = (timestamp: Timestamp) => {
+export const convertFirestoreTimestampToDate = (timestamp: Timestamp | undefined) => {
   if (!timestamp) {
     return "";
   }

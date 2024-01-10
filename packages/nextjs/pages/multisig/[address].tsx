@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
-import MultisigTransactionsList from "~~/components/MultisigTransactionsList";
+import CreateProposalForm from "~~/components/CreateProposalForm";
 import MultisigWalletDisplay from "~~/components/MultisigWalletDisplay";
 import TabButton from "~~/components/TabButton";
-import UpdateOwnersForm from "~~/components/UpdateOwnersForm";
+import TransactionPool from "~~/components/TransactionPool";
 import { Address } from "~~/components/scaffold-eth";
 import { DashboardTab } from "~~/config/multisigDashboard";
 import useWalletOwnership from "~~/hooks/custom/useWalletOwnership";
@@ -51,8 +51,10 @@ const MultisigWalletPage = () => {
         {activeTab === DashboardTab.Overview && walletData && (
           <MultisigWalletDisplay wallet={walletData} contractAddress={walletData.address} showEnter={false} />
         )}
-        {activeTab === DashboardTab.UpdateOwners && <UpdateOwnersForm />}
-        {activeTab === DashboardTab.Transactions && walletData && <MultisigTransactionsList walletData={walletData} />}
+        {activeTab === DashboardTab.CreateProposal && <CreateProposalForm />}
+        {activeTab === DashboardTab.Transactions && walletData && <TransactionPool walletData={walletData} />}
+        {/* TODO: Build withdraw stream form and implement functionality (directly interact with contract, does not require signatures or pool) */}
+        {activeTab === DashboardTab.Withdraw && <div>To be implemented...</div>}
       </div>
     </>
   );

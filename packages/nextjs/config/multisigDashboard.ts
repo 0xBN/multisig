@@ -12,6 +12,7 @@ export const DEFAULT_TX_DATA = {
 // Enum for Tab Values
 export enum DashboardTab {
   Overview = "overview",
-  UpdateOwners = "update owners",
-  Transactions = "transactions",
+  CreateProposal = "create proposal",
+  Transactions = "transaction pool",
+  Withdraw = "withdraw stream",
 }

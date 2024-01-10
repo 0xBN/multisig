@@ -1,7 +1,7 @@
 import { NextPage } from "next";
+import { useAccount } from "wagmi";
 import CreateMultisigForm from "~~/components/CreateMultisigForm";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { addFirestoreDocument, fetchFirestoreCollection } from "~~/services/firebaseService";
 
 interface TestData {
   id: string;
@@ -13,36 +13,18 @@ interface HomeProps {
   data: TestData[];
 }
 
-export const getServerSideProps = async () => {
-  try {
-    const data = await fetchFirestoreCollection("testData", "test");
-    return { props: { data } };
-  } catch (error) {
-    if (error instanceof Error) {
-      return { props: { data: [], error: error.message } };
-    } else {
-      return { props: { data: [], error: "An unexpected error occurred" } };
-    }
-  }
-};
-
-const Home: NextPage<HomeProps> = ({ data }) => {
-  const handleWriteToDB = async () => {
-    try {
-      const testData = {
-        title: "Test Write",
-        content: "This is a test write to the database.",
-      };
-      const docId = await addFirestoreDocument("testData", testData);
-      console.log(`Data written to testData with ID: ${docId}`);
-    } catch (error) {
-      console.error("Failed to write data:", error);
-    }
-  };
+const Home: NextPage<HomeProps> = () => {
+  const { isConnected } = useAccount();
   return (
     <>
       <MetaHeader />
-      <CreateMultisigForm />
+      {isConnected ? (
+        <CreateMultisigForm />
+      ) : (
+        <div className="text-4xl font-bold mb-4 p-8 text-center">
+          <p>Please connect your wallet to create a multisig wallet.</p>
+        </div>
+      )}
     </>
   );
 };

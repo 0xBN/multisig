@@ -8,5 +8,7 @@ export interface MultisigWallet {
   updatedAt?: Timestamp;
   threshold: number;
   signers: string[];
-  txHash: string;
+  openStreams?: string[];
+  closedStreams?: string[];
+  balance?: number;
 }

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
 import { isAddress } from "viem/utils";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import { AddressInput } from "~~/components/scaffold-eth";
 import useEthereum from "~~/hooks/custom/useEthereum";
 import useMultisigSigners from "~~/hooks/custom/useMultisigSigners";
-import useWalletConnection from "~~/hooks/custom/useWalletConnection";
 import { addFirestoreDocument } from "~~/services/firebaseService";
 import { MultisigWallet } from "~~/types/multisigWallet";
 import { parseErrorMessage } from "~~/utils/helper";
@@ -33,8 +32,8 @@ const NewMultisigWalletForm: React.FC<MultisigWalletFormProps> = ({
   setMultisigWalletData,
 }) => {
   const { setSigners } = useMultisigSigners();
-  const { chainId, isConnectedWalletAdded, connectedWallet } = useWalletConnection(signers);
   const { signer } = useEthereum();
+  const chainId = useChainId();
   const [isDeploying, setIsDeploying] = useState(false);
   const { address: userAddress } = useAccount();
 
@@ -42,8 +41,8 @@ const NewMultisigWalletForm: React.FC<MultisigWalletFormProps> = ({
   const validSignersCount = signers.filter(address => isAddress(address)).length;
 
   const handleAddConnectedWallet = () => {
-    if (connectedWallet && !signers.includes(connectedWallet)) {
-      setSigners([...signers, connectedWallet]);
+    if (userAddress && !signers.includes(userAddress)) {
+      setSigners([...signers, userAddress]);
     }
   };
 
@@ -93,7 +92,6 @@ const NewMultisigWalletForm: React.FC<MultisigWalletFormProps> = ({
         address: deployedAddress,
         signers: validSigners,
         threshold: threshold,
-        txHash: deployedAddress,
       };
 
       await addFirestoreDocument("multisigWallets", newMultisigWalletData);
@@ -121,9 +119,13 @@ const NewMultisigWalletForm: React.FC<MultisigWalletFormProps> = ({
       <h1 className="text-4xl font-bold mb-4">Create a Multisig Wallet</h1>
       <div>
         <div className={`mb-4 flex justify-evenly items-center rounded-md p-4 `}>
-          {connectedWallet && (
-            <button disabled={isConnectedWalletAdded} className="btn btn-outline" onClick={handleAddConnectedWallet}>
-              {isConnectedWalletAdded ? "Added Self" : "Add Self"}
+          {userAddress && (
+            <button
+              disabled={signers.includes(userAddress)}
+              className="btn btn-outline"
+              onClick={handleAddConnectedWallet}
+            >
+              {signers.includes(userAddress) ? "Added Self" : "Add Self"}
             </button>
           )}
           <button className="btn btn-outline" onClick={addSigner}>

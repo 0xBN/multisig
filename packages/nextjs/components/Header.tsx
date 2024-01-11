@@ -57,18 +57,18 @@ export const Header = () => {
           View My Multisig
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink href="/owners">
           <CheckBadgeIcon className="h-4 w-4" />
           Owners
         </NavLink>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <NavLink href="/create">
           <PlusCircleIcon className="h-4 w-4" />
           Create
         </NavLink>
-      </li>
+      </li> */}
       {/* <li>
         <NavLink href="/pool">
           <Bars3CenterLeftIcon className="h-4 w-4" />

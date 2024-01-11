@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import MetaMultiSigWallet from "../../hardhat/artifacts/contracts/MetaMultiSigWallet.sol/MetaMultiSigWallet.json";
+import MetaMultiSigWallet from "../abis/MetaMultiSigWallet.json";
+// import MetaMultiSigWallet from "../../hardhat/artifacts/contracts/MetaMultiSigWallet.sol/MetaMultiSigWallet.json";
 import { Contract, ethers } from "ethers";
 import { isAddress } from "viem";
 import { useAccount } from "wagmi";

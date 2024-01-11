@@ -201,9 +201,7 @@ const TransactionTableRow: FC<TransactionTableRowProps> = ({ transaction, setRef
 
     try {
       // Dynamically import the ABI
-      const contractArtifact = await import(
-        "../../hardhat/artifacts/contracts/MetaMultiSigWallet.sol/MetaMultiSigWallet.json"
-      );
+      const contractArtifact = await import("../abis/MetaMultiSigWallet.json");
 
       const contractABI = contractArtifact.default.abi;
 
